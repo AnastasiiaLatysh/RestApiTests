@@ -1,0 +1,19 @@
+{
+  "default_data":
+      {
+        "email": "first_name.last_name@gmail.com",
+        "firstName": "first_name",
+        "lastName": "last_name"
+      },
+
+  "updated_data":
+      {
+        "email": "updated_email@gmail.com",
+        "firstName": "updated_first_name",
+        "lastName": "updated_last_name"
+      },
+  "partial_updated_data":
+      {
+        "email": "updated_email@gmail.com"
+      }
+}
