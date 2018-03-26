@@ -2,9 +2,11 @@ import configparser
 import os
 
 
-class Configs:
-
-    # create instance of configparser and begin read config file
+class Configs(object):
+    """
+    Class which stores config information
+    """
+    # create instance of config parser and begin read config file
     parser = configparser.ConfigParser()
     parser.read(os.path.dirname(os.path.abspath(__file__)) + "/configs.conf")
 

@@ -1,4 +1,4 @@
-[SOURCE_DIRECTORY] = ../ResrApiTests
+[SOURCE_DIRECTORY] = ../RestApiTests
 
 1. To run test scripts please use next command in terminal in source directory:
 py.test --alluredir [$directory-to-save-results]

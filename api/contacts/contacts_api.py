@@ -1,6 +1,5 @@
 from api.base_api import BaseApi
-from configs.configs import Configs
-from api.base_helpers import BaseHelpers
+from api.contacts.contacts_helpers import ContactHelpers
 import os
 
 
@@ -8,7 +7,7 @@ class ContactsApi(BaseApi):
     """
     Class which represents api for contacts endpoint
     """
-    base_contacts_endpoint = Configs.base_contacts_endpoint
+    base_contacts_endpoint = ContactHelpers.base_contacts_endpoint
     test_data_folder = os.getcwd() + "/api/contacts/"
 
     @classmethod
@@ -22,7 +21,8 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is not None:
-            return cls.get(cls.BASE_URL, cls.base_contacts_endpoint + "/" + str(user_id), headers=cls.default_headers)
+            return cls.get(cls.BASE_URL, cls.base_contacts_endpoint + "/" + str(user_id),
+                           headers=cls.default_headers)
         elif user_query_params:
             return cls.get(cls.BASE_URL, cls.base_contacts_endpoint + "?" + str(user_query_params),
                            headers=cls.default_headers)
@@ -51,7 +51,8 @@ class ContactsApi(BaseApi):
         """
         if user_id is None:
             return cls.put(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
-                           str(cls.get_id_of_last_added_user()), data, headers=cls.default_headers)
+                           str(ContactHelpers.get_id_of_last_added_user()), data,
+                           headers=cls.default_headers)
         else:
             return cls.put(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(user_id), data,
                            headers=cls.default_headers)
@@ -67,7 +68,8 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is None:
-            return cls.patch(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(cls.get_id_of_last_added_user()),
+            return cls.patch(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
+                             str(ContactHelpers.get_id_of_last_added_user()),
                              data=data, headers=cls.default_headers)
         else:
             return cls.patch(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(user_id), data=data,
@@ -83,48 +85,9 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is None:
-            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(cls.get_id_of_last_added_user()),
+            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
+                              str(ContactHelpers.get_id_of_last_added_user()),
                               headers=cls.default_headers)
         else:
-            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(user_id), headers=cls.default_headers)
-
-    @classmethod
-    def get_id_of_last_added_user(cls):
-        """
-        Method which executes GET request on contacts api endpoint and
-        get id of last added user from content of response
-        :return: (int) id of last added user
-        """
-        response_data = BaseHelpers.parse_response_json(cls.get_contact(), 'data')
-        return response_data[len(response_data) - 1]["id"]
-
-    @classmethod
-    def get_first_name_of_last_added_user(cls):
-        """
-        Method which executes GET request on contacts api endpoint and
-        get firstName of last added user from content of response
-        :return: (str) firstName of last added user
-        """
-
-        response_data = BaseHelpers.parse_response_json(cls.get_contact(), 'data')
-        return response_data[len(response_data) - 1]["info"]["firstName"]
-
-    @classmethod
-    def get_last_name_of_last_added_user(cls):
-        """
-        Method which executes GET request on contacts api endpoint and
-        get lastName of last added user from content of response
-        :return: (str) lastName of last added user
-        """
-        response_data = BaseHelpers.parse_response_json(cls.get_contact(), 'data')
-        return response_data[len(response_data) - 1]["info"]["lastName"]
-
-    @classmethod
-    def get_email_of_last_added_user(cls):
-        """
-        Method which executes GET request on contacts api endpoint and
-        get email of last added user from content of response
-        :return: (str) email of last added user
-        """
-        response_data = BaseHelpers.parse_response_json(cls.get_contact(), 'data')
-        return response_data[len(response_data) - 1]["info"]["email"]
+            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
+                              str(user_id), headers=cls.default_headers)

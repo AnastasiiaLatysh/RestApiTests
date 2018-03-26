@@ -1,8 +1,7 @@
-from api.base_helpers import BaseHelpers
-
-
 class TestBase:
-
+    """
+    Base class for all api resources
+    """
     @classmethod
     def setup_class(cls):
         print("Base setup for all resources")
