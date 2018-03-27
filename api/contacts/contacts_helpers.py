@@ -22,6 +22,10 @@ class ContactHelpers(BaseHelpers):
             raise KeyError("There is no 'data' in returned response")
 
     @classmethod
+    def get_amount_of_contacts(cls):
+        return len(cls.get_response_data())
+
+    @classmethod
     def get_id_of_last_added_user(cls):
         """
         Method which executes GET request on contacts api endpoint and

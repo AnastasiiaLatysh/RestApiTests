@@ -8,7 +8,7 @@ class BaseHelpers(object):
     """
 
     @staticmethod
-    def wait_until_expression_will_be_true(condition, message='', timeout=5, period=0.25, *args, **kwargs):
+    def wait_until_condition_will_be_true(condition, message='', timeout=5, period=0.25, *args, **kwargs):
         must_end = time.time() + timeout
         while time.time() < must_end:
             if condition:

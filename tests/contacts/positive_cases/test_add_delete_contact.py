@@ -3,12 +3,10 @@ import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
 
 
-@pytest.mark.usefixtures("contact_data")
 class TestAddDeleteContacts(TestBaseContacts):
 
     @pytest.allure.testcase('Positive: POST request to add new contact - verify 201'
-                            'Created contact will be deleted after test script '
-                            'using delete_contact_fixture')
+                            'Created contact will be deleted after test script using delete_contact_fixture')
     @pytest.mark.usefixtures("delete_contact_fixture")
     def test_add_contact(self, contact_data):
         # check response code, reason and body for POST
