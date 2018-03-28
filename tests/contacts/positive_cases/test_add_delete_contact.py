@@ -20,7 +20,7 @@ class TestAddDeleteContacts(TestBaseContacts):
 
     @pytest.allure.story("Delete contact feature")
     @pytest.allure.testcase('Positive: DELETE request to delete contact by id - verify 200'
-                            'Contact was added before deleting using add_contact_fixture')
+                            'Contact was added before DELETE using add_contact_fixture')
     @pytest.mark.usefixtures("add_contact_fixture")
     def test_delete_contact(self, contact_data):
         # check response code, reason and body for DELETE

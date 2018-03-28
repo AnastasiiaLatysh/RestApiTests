@@ -10,9 +10,7 @@ from configs.configs import Configs
 class TestAddWithIncorrectData(TestBaseContacts):
 
     @pytest.allure.story("Add contact feature")
-    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
-                            'If user was added he will be deleted after test script '
-                            'using delete_contact_fixture')
+    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404')
     @pytest.mark.xfail()
     def test_add_contact_with_empty_data(self):
         # check response code and reason for POST with empty data
@@ -21,9 +19,7 @@ class TestAddWithIncorrectData(TestBaseContacts):
         assert post_response.reason == 'Not Found', 'Status message is incorrect'
 
     @pytest.allure.story("Add contact feature")
-    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
-                            'If user was added he will be deleted after test script '
-                            'using delete_contact_fixture')
+    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404')
     @pytest.mark.xfail()
     @pytest.mark.parametrize("with_empty_filed", [ContactsDataGeneration.generate_data(empty_name=True),
                                                   ContactsDataGeneration.generate_data(empty_last_name=True)],
@@ -35,9 +31,7 @@ class TestAddWithIncorrectData(TestBaseContacts):
         assert post_response.reason == 'Not Found', 'Status message is incorrect'
 
     @pytest.allure.story("Add contact feature")
-    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
-                            'If user was added he will be deleted after test script '
-                            'using delete_contact_fixture')
+    @pytest.allure.testcase('Negative: POST request to add new contact - verify 404')
     @pytest.mark.xfail()
     @pytest.mark.parametrize("without_needed_symbols", ["test_email.com", "email@com", ""],
                              ids=["without_@", "without_dot", "empty email"])
