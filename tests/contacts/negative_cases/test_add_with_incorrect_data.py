@@ -1,12 +1,15 @@
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
 from api.contacts.contacts_data_generation import ContactsDataGeneration
+from configs.configs import Configs
 
 
 # FIXTURE IS USED TO DELETE CONTACT AFTER EACH TEST IN CASE USER WITH INVALID DATA WAS ADDED
 @pytest.mark.usefixtures("delete_contact_fixture")
+@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestAddWithIncorrectData(TestBaseContacts):
 
+    @pytest.allure.story("Add contact feature")
     @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
                             'If user was added he will be deleted after test script '
                             'using delete_contact_fixture')
@@ -17,6 +20,7 @@ class TestAddWithIncorrectData(TestBaseContacts):
         assert post_response.status_code == 404, 'Status code is incorrect'
         assert post_response.reason == 'Not Found', 'Status message is incorrect'
 
+    @pytest.allure.story("Add contact feature")
     @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
                             'If user was added he will be deleted after test script '
                             'using delete_contact_fixture')
@@ -30,6 +34,7 @@ class TestAddWithIncorrectData(TestBaseContacts):
         assert post_response.status_code == 404, 'Status code is incorrect'
         assert post_response.reason == 'Not Found', 'Status message is incorrect'
 
+    @pytest.allure.story("Add contact feature")
     @pytest.allure.testcase('Negative: POST request to add new contact - verify 404'
                             'If user was added he will be deleted after test script '
                             'using delete_contact_fixture')

@@ -12,4 +12,5 @@ class Configs(object):
 
     # read base url and contacts endpoint from configs
     base_url = parser.get('api_test_parameters', 'BASE_URL')
-    base_contacts_endpoint = parser.get('api_test_parameters', 'base_contacts_endpoint')
+    api_version = parser.get('api_test_parameters', 'api_version')
+    base_contacts_endpoint = api_version + parser.get('api_test_parameters', 'base_contacts_endpoint')

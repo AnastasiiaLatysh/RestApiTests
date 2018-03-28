@@ -10,6 +10,7 @@ class BaseApi(object):
     """
 
     BASE_URL = Configs.base_url
+    API_VERSION = Configs.api_version
     default_headers = {"Content-Type": "application/json"}
 
     @classmethod

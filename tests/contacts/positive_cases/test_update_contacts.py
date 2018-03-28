@@ -1,11 +1,14 @@
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
+from configs.configs import Configs
 
 
 # FIXTURE IS USED TO ADD AND DELETE CONTACT BEFORE EACH CASE
 @pytest.mark.usefixtures("add_contact_before_and_delete_after")
+@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestUpdateContacts(TestBaseContacts):
 
+    @pytest.allure.story("Update contact feature")
     @pytest.allure.testcase('Positive: PUT request to update info of contact')
     def test_full_contact_update(self, updated_contact_data):
         id_of_user_to_be_updated = self.contact_helpers.get_id_of_last_added_user()
@@ -23,6 +26,7 @@ class TestUpdateContacts(TestBaseContacts):
                                                                   updated_contact_data.values()),\
             "Content doesn't contain correct value of contacts"
 
+    @pytest.allure.story("Update contact feature")
     @pytest.allure.testcase('Positive: PATCH request to partial update of contact info')
     def test_partial_contact_update(self, partial_updated_contact_data):
         id_of_user_to_be_updated = self.contact_helpers.get_id_of_last_added_user()

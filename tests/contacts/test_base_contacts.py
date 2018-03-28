@@ -7,9 +7,9 @@ class TestBaseContacts(TestBase):
 
     @classmethod
     def setup_class(cls):
+        print("set up contacts")
         cls.contact_helpers = ContactHelpers
         cls.contacts_api = ContactsApi
-        print("set up contacts")
 
     @classmethod
     def teardown_class(cls):

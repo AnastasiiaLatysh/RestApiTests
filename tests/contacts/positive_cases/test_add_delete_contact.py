@@ -1,10 +1,12 @@
 import pytest
-
 from tests.contacts.test_base_contacts import TestBaseContacts
+from configs.configs import Configs
 
 
+@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestAddDeleteContacts(TestBaseContacts):
 
+    @pytest.allure.story("Add contact feature")
     @pytest.allure.testcase('Positive: POST request to add new contact - verify 201'
                             'Created contact will be deleted after test script using delete_contact_fixture')
     @pytest.mark.usefixtures("delete_contact_fixture")
@@ -16,6 +18,7 @@ class TestAddDeleteContacts(TestBaseContacts):
         assert self.contact_helpers.check_values_in_response_body(post_response.content, contact_data.values()), \
             'Content is incorrect'
 
+    @pytest.allure.story("Delete contact feature")
     @pytest.allure.testcase('Positive: DELETE request to delete contact by id - verify 200'
                             'Contact was added before deleting using add_contact_fixture')
     @pytest.mark.usefixtures("add_contact_fixture")
