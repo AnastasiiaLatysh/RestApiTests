@@ -1,6 +1,6 @@
 from api.base_api import BaseApi
 from api.contacts.contacts_helpers import ContactHelpers
-import os
+from configs.configs import Configs
 
 
 class ContactsApi(BaseApi):
@@ -8,7 +8,7 @@ class ContactsApi(BaseApi):
     Class which represents api for contacts endpoint
     """
     base_contacts_endpoint = ContactHelpers.base_contacts_endpoint
-    test_data_folder = os.getcwd() + "/api/contacts/"
+    test_data_folder = Configs.path_to_main_dir + "/api/contacts/"
 
     @classmethod
     def get_contact(cls, user_id=None, user_query_params=None, **kwargs):

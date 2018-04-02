@@ -28,3 +28,7 @@ class ContactsDataGeneration(object):
                 "firstName": "",
                 "lastName": ""}
         return data
+
+    @classmethod
+    def generate_random_integer(cls, begin=0, end=10000):
+        return random.randint(begin, end)
