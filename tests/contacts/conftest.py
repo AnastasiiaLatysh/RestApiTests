@@ -8,8 +8,7 @@ from api.contacts.contacts_helpers import ContactHelpers
 @pytest.fixture()
 def add_contact_fixture(contact_data):
     # add contact before test method
-    response = ContactsApi.post_contact(contact_data)
-    BaseHelpers.wait_until_condition_will_be_true(response.status_code == 201, 'adding contact')
+    ContactsApi.post_contact(contact_data)
 
 
 @pytest.yield_fixture()
@@ -19,8 +18,7 @@ def delete_contact_fixture():
     yield
     # delete contact after test method if user was added at the beginning of the test
     if amount_of_users_before + 1 == ContactHelpers.get_amount_of_contacts():
-        response = ContactsApi.delete_contact()
-        BaseHelpers.wait_until_condition_will_be_true(response.status_code == 200)
+        ContactsApi.delete_contact()
 
 
 @pytest.yield_fixture()
@@ -29,8 +27,7 @@ def add_contact_before_and_delete_after(add_contact_fixture, delete_contact_fixt
     add_contact_fixture
     yield
     # delete contact after test method
-    response = ContactsApi.delete_contact()
-    BaseHelpers.wait_until_condition_will_be_true(response.status_code == 200)
+    ContactsApi.delete_contact()
 
 
 # [Test Data fixtures]
