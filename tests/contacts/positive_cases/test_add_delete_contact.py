@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
 from configs.configs import Configs
 
 
 @pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
-class TestAddDeleteContacts(TestBaseContacts):
+class TestAddDeleteContacts(TestBaseContacts):  # TODO при использовании pytest не принято обьединять тесты в классы (только в случае legacy)
 
     @pytest.allure.story("Add contact feature")
     @pytest.allure.testcase('Positive: POST request to add new contact - verify 201'

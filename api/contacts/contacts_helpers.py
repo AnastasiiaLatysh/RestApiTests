@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 from api.base_helpers import BaseHelpers
 from api.base_api import BaseApi
 from configs.configs import Configs
 from api.contacts.contacts_data_generation import ContactsDataGeneration
 
 
-class ContactHelpers(BaseHelpers):
+class ContactHelpers(BaseHelpers):  # TODO Не согласен с названием класса. Это просто следующий слой ContactAPI
     """
     Class which contains helpers for manipulating contacts endpoint
     """

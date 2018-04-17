@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import json
 import requests
 from api.logger import log
 from configs.configs import Configs
 
 
-class BaseApi(object):
+class BaseApi(object):  # TODO не согласен с названием класса. Это просто кастомный http клиент.
     """
     Class which represents common api methods for any endpoint
     """
@@ -13,6 +14,7 @@ class BaseApi(object):
     API_VERSION = Configs.api_version
     default_headers = {"Content-Type": "application/json"}
 
+    # TODO логирование часто удобно делается декораторами
     @classmethod
     def get(cls, base_url, endpoint, **kwargs):
         """
@@ -38,7 +40,7 @@ class BaseApi(object):
         :return: requests.Response object
         """
         log('Sending POST url: %s headers: %s. Body: %s' % (base_url + endpoint, kwargs['headers'], data))
-        response = requests.post(base_url + endpoint, data=json.dumps(data), headers=cls.default_headers)
+        response = requests.post(base_url + endpoint, data=json.dumps(data), headers=cls.default_headers)  # TODO Хедеры лучше в данном сдучае приписывать к инстансу а не к класу
         log('Received "%s".' % response)
         return response
 

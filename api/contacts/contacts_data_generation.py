@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 import string
 import random
 
 
 class ContactsDataGeneration(object):
-
+    # TODO посмотри в сторону Factory boy и Faker
     @classmethod
     def generate_data(cls, empty_name=False, empty_last_name=False, max_string_len=10):
         email = ''.join(random.choice(string.ascii_letters) for _ in range(max_string_len)) + "@gmail.com"

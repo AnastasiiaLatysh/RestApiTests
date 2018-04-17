@@ -1,17 +1,17 @@
-import pytest
+# -*- coding: utf-8 -*-import pytest
 from api.base_helpers import BaseHelpers
 from api.contacts.contacts_api import ContactsApi
 import json
 from api.contacts.contacts_helpers import ContactHelpers
 
 
-@pytest.fixture()
+@pytest.fixture()  # TODO скобки не обязательны
 def add_contact_fixture(contact_data):
     # add contact before test method
     ContactsApi.post_contact(contact_data)
 
 
-@pytest.yield_fixture()
+@pytest.yield_fixture() # TODO Устаревшая конструкция в pytest
 def delete_contact_fixture():
     # get amount of users before test execution
     amount_of_users_before = ContactHelpers.get_amount_of_contacts()
@@ -21,10 +21,10 @@ def delete_contact_fixture():
         ContactsApi.delete_contact()
 
 
-@pytest.yield_fixture()
+@pytest.yield_fixture()  # TODO Устаревшая конструкция в pytest
 def add_contact_before_and_delete_after(add_contact_fixture, delete_contact_fixture):
     # add contact before test method
-    add_contact_fixture
+    add_contact_fixture  # TODO Явная ошибка
     yield
     # delete contact after test method
     ContactsApi.delete_contact()

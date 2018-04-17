@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from api.base_api import BaseApi
 from api.contacts.contacts_helpers import ContactHelpers
 from configs.configs import Configs
@@ -10,8 +11,9 @@ class ContactsApi(BaseApi):
     base_contacts_endpoint = ContactHelpers.base_contacts_endpoint
     test_data_folder = Configs.path_to_main_dir + "/api/contacts/"
 
+    # TODO Необьяснимая любовь к классметодам. См. комментарий к базовому классу
     @classmethod
-    def get_contact(cls, user_id=None, user_query_params=None, **kwargs):
+    def get_contact(cls, user_id=None, user_query_params=None, **kwargs):  # TODO нужны ли здесь kwargs?
         """
         Method which executes GET request on contacts endpoint
         By default get information of all existing users
