@@ -1,10 +1,10 @@
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
-from configs.configs import Configs
+from configs.config import Config
 
 
 @pytest.mark.usefixtures("add_contact_before_and_delete_after")
-@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
+@pytest.mark.skipif(Config.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestDeleteNonExistentUser(TestBaseContacts):
 
     @pytest.allure.story("Delete contact feature")

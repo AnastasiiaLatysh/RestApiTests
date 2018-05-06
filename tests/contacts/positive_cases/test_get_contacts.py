@@ -1,11 +1,12 @@
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
-from configs.configs import Configs
+from configs.config import Config
+from api.base_helpers import check_values_in_response_body
 
 
 # FIXTURE IS USED TO ADD AND DELETE CONTACT BEFORE EACH CASE
 @pytest.mark.usefixtures("add_contact_before_and_delete_after")
-@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
+@pytest.mark.skipif(Config.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestGetContacts(TestBaseContacts):
 
     @pytest.allure.story("Get contact feature")
@@ -14,7 +15,7 @@ class TestGetContacts(TestBaseContacts):
         get_response = self.contacts_api.get_contact()
         assert get_response.status_code == 200, 'Status code is incorrect'
         assert get_response.reason == 'OK', 'Status message is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(get_response.content, contact_data.values()), \
+        assert check_values_in_response_body(get_response.content, contact_data.values()), \
             'Content doesn\'t contain correct value'
 
     @pytest.allure.story("Get contact feature")
@@ -23,7 +24,7 @@ class TestGetContacts(TestBaseContacts):
         get_response = self.contacts_api.get_contact(user_id=self.contact_helpers.get_id_of_last_added_user())
         assert get_response.status_code == 200, 'Status code is incorrect'
         assert get_response.reason == 'OK', 'Status message is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(get_response.content, contact_data.values()), \
+        assert check_values_in_response_body(get_response.content, contact_data.values()), \
             "Content doesn't contain correct value of contact with id {}".format(
                 self.contact_helpers.get_id_of_last_added_user())
 
@@ -35,6 +36,6 @@ class TestGetContacts(TestBaseContacts):
             self.contact_helpers.get_email_of_last_added_user()))
         assert get_response.status_code == 200, 'Status code is incorrect'
         assert get_response.reason == 'OK', 'Status message is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(get_response.content, contact_data.values()), \
+        assert check_values_in_response_body(get_response.content, contact_data.values()), \
             "Content doesn't contain correct value of contact with id {}".format(
                 self.contact_helpers.get_id_of_last_added_user())

@@ -2,7 +2,7 @@ import configparser
 import os
 
 
-class Configs(object):
+class Config(object):
     """
     Class which stores config information
     """

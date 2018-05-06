@@ -1,17 +1,21 @@
 from api.base_api import BaseApi
-from api.contacts.contacts_helpers import ContactHelpers
-from configs.configs import Configs
+from configs.config import Config
+from api.contacts.contacts_helper import ContactHelper
 
 
 class ContactsApi(BaseApi):
     """
     Class which represents api for contacts endpoint
     """
-    base_contacts_endpoint = ContactHelpers.base_contacts_endpoint
-    test_data_folder = Configs.path_to_main_dir + "/api/contacts/"
 
-    @classmethod
-    def get_contact(cls, user_id=None, user_query_params=None, **kwargs):
+    base_contacts_endpoint = ContactHelper.base_contacts_endpoint
+    test_data_folder = Config.path_to_main_dir + "/tests/contacts/"
+
+    def __init__(self):
+        self.contact_helper = ContactHelper()
+        super(ContactsApi, self).__init__()
+
+    def get_contact(self, user_id=None, user_query_params=None):
         """
         Method which executes GET request on contacts endpoint
         By default get information of all existing users
@@ -21,26 +25,24 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is not None:
-            return cls.get(cls.BASE_URL, cls.base_contacts_endpoint + "/" + str(user_id),
-                           headers=cls.default_headers)
+            return self.get(self.BASE_URL, self.base_contacts_endpoint + "/" + str(user_id),
+                            headers=self.default_headers)
         elif user_query_params:
-            return cls.get(cls.BASE_URL, cls.base_contacts_endpoint + "?" + str(user_query_params),
-                           headers=cls.default_headers)
+            return self.get(self.BASE_URL, self.base_contacts_endpoint + "?" + str(user_query_params),
+                            headers=self.default_headers)
         else:
-            return cls.get(cls.BASE_URL, cls.base_contacts_endpoint, headers=cls.default_headers)
+            return self.get(self.BASE_URL, self.base_contacts_endpoint, headers=self.default_headers)
 
-    @classmethod
-    def post_contact(cls, data, **kwargs):
+    def post_contact(self, data):
         """
         Method which executes POST request on contacts endpoint
         :param data: data which should be sent in request dody to create new contact
         :param \*\*kwargs: Optional arguments that ``request`` takes.
         :return: requests.Response object
         """
-        return cls.post(cls.BASE_URL, cls.base_contacts_endpoint, data, headers=cls.default_headers)
+        return self.post(self.BASE_URL, self.base_contacts_endpoint, data, headers=self.default_headers)
 
-    @classmethod
-    def put_contact(cls, data, user_id=None,  **kwargs):
+    def put_contact(self, data, user_id=None):
         """
         Method which executes PUT request on contacts endpoint
         By default update info of  last added user from DB
@@ -50,15 +52,14 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is None:
-            return cls.put(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
-                           str(ContactHelpers.get_id_of_last_added_user()), data,
-                           headers=cls.default_headers)
+            return self.put(self.BASE_URL, self.base_contacts_endpoint + '/' +
+                            str(self.contact_helper.get_id_of_last_added_user()), data,
+                            headers=self.default_headers)
         else:
-            return cls.put(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(user_id), data,
-                           headers=cls.default_headers)
+            return self.put(self.BASE_URL, self.base_contacts_endpoint + '/' + str(user_id), data,
+                            headers=self.default_headers)
 
-    @classmethod
-    def patch_contact(cls, data, user_id=None, **kwargs):
+    def patch_contact(self, data, user_id=None):
         """
         Method which executes PUT request on contacts endpoint
         By default update info of  last added user from DB
@@ -68,15 +69,14 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is None:
-            return cls.patch(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
-                             str(ContactHelpers.get_id_of_last_added_user()),
-                             data=data, headers=cls.default_headers)
+            return self.patch(self.BASE_URL, self.base_contacts_endpoint + '/' +
+                              str(self.contact_helper.get_id_of_last_added_user()),
+                              data=data, headers=self.default_headers)
         else:
-            return cls.patch(cls.BASE_URL, cls.base_contacts_endpoint + '/' + str(user_id), data=data,
-                             headers=cls.default_headers)
+            return self.patch(self.BASE_URL, self.base_contacts_endpoint + '/' + str(user_id), data=data,
+                              headers=self.default_headers)
 
-    @classmethod
-    def delete_contact(cls, user_id=None, **kwargs):
+    def delete_contact(self, user_id=None):
         """
         Method which executes DELETE request on contacts endpoint
         By default delete last added user from DB
@@ -85,9 +85,9 @@ class ContactsApi(BaseApi):
         :return: requests.Response object
         """
         if user_id is None:
-            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
-                              str(ContactHelpers.get_id_of_last_added_user()),
-                              headers=cls.default_headers)
+            return self.delete(self.BASE_URL, self.base_contacts_endpoint + '/' +
+                               str(self.contact_helper.get_id_of_last_added_user()),
+                               headers=self.default_headers)
         else:
-            return cls.delete(cls.BASE_URL, cls.base_contacts_endpoint + '/' +
-                              str(user_id), headers=cls.default_headers)
+            return self.delete(self.BASE_URL, self.base_contacts_endpoint + '/' +
+                               str(user_id), headers=self.default_headers)

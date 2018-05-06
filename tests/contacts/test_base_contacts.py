@@ -1,15 +1,15 @@
-from tests.test_base import TestBase
-from api.contacts.contacts_helpers import ContactHelpers
+from api.contacts.contacts_helper import ContactHelper
 from api.contacts.contacts_api import ContactsApi
 
 
-class TestBaseContacts(TestBase):
+class TestBaseContacts(object):
 
     @classmethod
     def setup_class(cls):
         print("set up contacts")
-        cls.contact_helpers = ContactHelpers
-        cls.contacts_api = ContactsApi
+        cls.contacts_api = ContactsApi()
+        cls.contact_helpers = ContactHelper()
+        cls.base_helpers = ContactHelper()
 
     @classmethod
     def teardown_class(cls):

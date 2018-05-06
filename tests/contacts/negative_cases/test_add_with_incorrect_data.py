@@ -1,12 +1,13 @@
 import pytest
-from tests.contacts.test_base_contacts import TestBaseContacts
+
 from api.contacts.contacts_data_generation import ContactsDataGeneration
-from configs.configs import Configs
+from configs.config import Config
+from tests.contacts.test_base_contacts import TestBaseContacts
 
 
 # FIXTURE IS USED TO DELETE CONTACT AFTER EACH TEST IN CASE USER WITH INVALID DATA WAS ADDED
 @pytest.mark.usefixtures("delete_contact_fixture")
-@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
+@pytest.mark.skipif(Config.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestAddWithIncorrectData(TestBaseContacts):
 
     @pytest.allure.story("Add contact feature")

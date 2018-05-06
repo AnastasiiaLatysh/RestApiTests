@@ -1,11 +1,12 @@
 import pytest
 from tests.contacts.test_base_contacts import TestBaseContacts
-from configs.configs import Configs
+from configs.config import Config
+from api.base_helpers import check_values_in_response_body
 
 
 # FIXTURE IS USED TO ADD AND DELETE CONTACT BEFORE EACH CASE
 @pytest.mark.usefixtures("add_contact_before_and_delete_after")
-@pytest.mark.skipif(Configs.api_version != '/api/v1', reason='First api version should be for scripts execution')
+@pytest.mark.skipif(Config.api_version != '/api/v1', reason='First api version should be for scripts execution')
 class TestUpdateContacts(TestBaseContacts):
 
     @pytest.allure.story("Update contact feature")
@@ -15,14 +16,14 @@ class TestUpdateContacts(TestBaseContacts):
         put_response = self.contacts_api.put_contact(updated_contact_data, user_id=id_of_user_to_be_updated)
         assert put_response.status_code == 200, 'Status code is incorrect'
         assert put_response.reason == 'OK', 'Status message is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(put_response.content,
+        assert check_values_in_response_body(put_response.content,
                                                                   updated_contact_data.values()), \
             "Content doesn't contain correct value of contacts"
 
         # check that user was updated
         get_response = self.contacts_api.get_contact(user_id=id_of_user_to_be_updated)
         assert get_response.status_code == 200, 'Status code is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(put_response.content,
+        assert check_values_in_response_body(put_response.content,
                                                                   updated_contact_data.values()),\
             "Content doesn't contain correct value of contacts"
 
@@ -34,13 +35,13 @@ class TestUpdateContacts(TestBaseContacts):
                                                             user_id=id_of_user_to_be_updated)
         assert patch_response.status_code == 200, 'Status code is incorrect'
         assert patch_response.reason == 'OK', 'Status message is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(
+        assert check_values_in_response_body(
             patch_response.content, partial_updated_contact_data.values()), \
             "Content doesn't contain correct value of contacts"
 
         # check that user was updated
         get_response = self.contacts_api.get_contact(user_id=id_of_user_to_be_updated)
         assert get_response.status_code == 200, 'Status code is incorrect'
-        assert self.contact_helpers.check_values_in_response_body(
+        assert check_values_in_response_body(
             patch_response.content, partial_updated_contact_data.values()), \
             "Content doesn't contain correct value of contacts"

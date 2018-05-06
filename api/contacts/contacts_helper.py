@@ -1,75 +1,68 @@
-from api.base_helpers import BaseHelpers
 from api.base_api import BaseApi
-from configs.configs import Configs
+from api.base_helpers import parse_response_json
 from api.contacts.contacts_data_generation import ContactsDataGeneration
+from configs.config import Config
 
 
-class ContactHelpers(BaseHelpers):
+class ContactHelper(object):
     """
     Class which contains helpers for manipulating contacts endpoint
     """
 
-    base_contacts_endpoint = Configs.base_contacts_endpoint
+    base_contacts_endpoint = Config.base_contacts_endpoint
 
-    @classmethod
-    def get_response_data(cls):
+    def get_response_data(self):
         try:
-            response_data = BaseHelpers.parse_response_json(BaseApi.get(BaseApi.BASE_URL,
-                                                                        cls.base_contacts_endpoint,
-                                                                        headers=BaseApi.default_headers),
-                                                            'data')
+            base_api = BaseApi()
+            response_data = parse_response_json(base_api.get(base_api.BASE_URL, self.base_contacts_endpoint,
+                                                             headers=base_api.default_headers), 'data')
             return response_data
         except KeyError:
             raise KeyError("There is no 'data' in returned response")
 
-    @classmethod
-    def get_amount_of_contacts(cls):
-        return len(cls.get_response_data())
+    def get_amount_of_contacts(self):
+        return len(self.get_response_data())
 
-    @classmethod
-    def get_id_of_last_added_user(cls):
+    def get_id_of_last_added_user(self):
         """
         Method which executes GET request on contacts api endpoint and
         get id of last added user from content of response
         :return: (int) id of last added user
         """
-        return cls.get_response_data()[len(cls.get_response_data()) - 1]["id"]
+        response_data = self.get_response_data()
+        return response_data[len(response_data) - 1]["id"]
 
-    @classmethod
-    def get_first_name_of_last_added_user(cls):
+    def get_first_name_of_last_added_user(self):
         """
         Method which executes GET request on contacts api endpoint and
         get firstName of last added user from content of response
         :return: (str) firstName of last added user
         """
-        return cls.get_response_data()[len(cls.get_response_data()) - 1]["info"]["firstName"]
+        return self.get_response_data()[len(self.get_response_data()) - 1]["info"]["firstName"]
 
-    @classmethod
-    def get_last_name_of_last_added_user(cls):
+    def get_last_name_of_last_added_user(self):
         """
         Method which executes GET request on contacts api endpoint and
         get lastName of last added user from content of response
         :return: (str) lastName of last added user
         """
-        return cls.get_response_data()[len(cls.get_response_data()) - 1]["info"]["lastName"]
+        return self.get_response_data()[len(self.get_response_data()) - 1]["info"]["lastName"]
 
-    @classmethod
-    def get_email_of_last_added_user(cls):
+    def get_email_of_last_added_user(self):
         """
         Method which executes GET request on contacts api endpoint and
         get email of last added user from content of response
         :return: (str) email of last added user
         """
-        return cls.get_response_data()[len(cls.get_response_data()) - 1]["info"]["email"]
+        return self.get_response_data()[len(self.get_response_data()) - 1]["info"]["email"]
 
-    @classmethod
-    def get_contacts_ids(cls):
+    def get_contacts_ids(self):
         """
         Method which executes GET request on contacts api endpoint and
         get ids of all existent contacts from content of response
         :return: (list) nonexistent ids of contacts
         """
-        data = cls.get_response_data()
+        data = self.get_response_data()
         nonexistent_ids = []
         for item in data:
             try:
@@ -78,14 +71,13 @@ class ContactHelpers(BaseHelpers):
                 continue
         return nonexistent_ids
 
-    @classmethod
-    def get_nonexistent_contact_id(cls):
+    def get_nonexistent_contact_id(self):
         """
         Method which executes GET request on contacts api endpoint and
         get id of nonexistent contact from content of response
         :return: (int) id of nonexistent contact
         """
-        data = cls.get_contacts_ids()
+        data = self.get_contacts_ids()
         attempt = 0
         while attempt < 100:
             nonexistent_id = ContactsDataGeneration.generate_random_integer()
